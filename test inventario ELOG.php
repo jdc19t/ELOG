@@ -756,7 +756,13 @@ if (!isset($_SESSION['user_id'])) {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(product)
             });
-            return res.json();
+            const text = await res.text();
+            try {
+                return JSON.parse(text);
+            } catch (err) {
+                console.error('apiAddProduct: non-JSON response', res.status, text);
+                return { success: false, error: 'Non-JSON response from server', raw: text, status: res.status };
+            }
         }
 
         async function apiUpdateProduct(product) {
@@ -765,7 +771,13 @@ if (!isset($_SESSION['user_id'])) {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(product)
             });
-            return res.json();
+            const text = await res.text();
+            try {
+                return JSON.parse(text);
+            } catch (err) {
+                console.error('apiUpdateProduct: non-JSON response', res.status, text);
+                return { success: false, error: 'Non-JSON response from server', raw: text, status: res.status };
+            }
         }
 
         async function apiDeleteProduct(id) {
@@ -774,7 +786,13 @@ if (!isset($_SESSION['user_id'])) {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({id})
             });
-            return res.json();
+            const text = await res.text();
+            try {
+                return JSON.parse(text);
+            } catch (err) {
+                console.error('apiDeleteProduct: non-JSON response', res.status, text);
+                return { success: false, error: 'Non-JSON response from server', raw: text, status: res.status };
+            }
         }
 
         function showSaveNotification() {
